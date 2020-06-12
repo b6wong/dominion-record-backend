@@ -19,3 +19,17 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: b6wong/dominion-record-backend
         tags: latest
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secret.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secret.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secret.ECS_REGION }}
+
+    - name: ECS Force New Deployment
+      run: |
+        aws ecs update-service \
+        --cluster ${{ secrets.ECS_CLUSTER_ARN }} \
+        --service ${{ secrets.ECS_SERVICE_ARN }} \
+        --force-new-deployment
