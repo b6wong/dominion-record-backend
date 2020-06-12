@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Dominion Record Backend." });
+  res.json({ message: "Welcome to Dominion Record Backend!" });
 });
 
 require("./app/routes/game.routes")(app);
