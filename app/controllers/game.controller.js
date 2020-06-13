@@ -38,10 +38,13 @@ exports.create = (req, res) => {
 
 // Retrieve all Games from the database
 exports.findAll = (req, res) => {
-    //const title = req.query.title;
-    //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
-    var condition = null;
+    const player = req.query.player;
+    var condition = player ? { 
+            [Op.or]: {
+                player1: { [Op.eq]: player },
+                player2: { [Op.eq]: player } 
+            }
+        } : null;
 
     Game.findAll({ where: condition })
         .then(data => {
